@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=640">
+
+    <link rel="stylesheet" href="stylesheets/core.css" media="screen">
+    <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+
+    <script type="text/javascript" src="javascripts/modernizr.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $('#main_content').headsmart()
+      })
+    </script>
+    <title>ng2-image-lazy-load by NathanWalker</title>
+  </head>
+
+  <body>
+    <a id="forkme_banner" href="https://github.com/NathanWalker/ng2-image-lazy-load">View on GitHub</a>
+    <div class="shell">
+
+      <header>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <h1>ng2-image-lazy-load</h1>
+            <h2>Angular2 image lazy loader library.</h2>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+      </header>
+
+      <section id="downloads">
+        <span class="inner">
+          <a href="https://github.com/NathanWalker/ng2-image-lazy-load/zipball/master" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/NathanWalker/ng2-image-lazy-load/tarball/master" class="tgz"><em>download</em> .TGZ</a>
+        </span>
+      </section>
+
+
+      <span class="banner-fix"></span>
+
+
+      <section id="main_content">
+        <h1>
+<a id="ng2-image-lazy-load" class="anchor" href="#ng2-image-lazy-load" aria-hidden="true"><span class="octicon octicon-link"></span></a>ng2-image-lazy-load</h1>
+
+<p>Demo: <a href="https://ng2-image-lazy-load-demo.herokuapp.com">https://ng2-image-lazy-load-demo.herokuapp.com</a></p>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<div class="highlight highlight-source-shell"><pre>npm install ng2-image-lazy-load --save</pre></div>
+
+<p>If you use SystemJS to load your files (like the demo), you might have to update your config with this:</p>
+
+<div class="highlight highlight-source-js"><pre>System.config({
+    map<span class="pl-k">:</span> {
+        <span class="pl-s"><span class="pl-pds">'</span>ng2-image-lazy-load<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>node_modules/ng2-image-lazy-load<span class="pl-pds">'</span></span>
+    }
+});</pre></div>
+
+<h2>
+<a id="example-implementation" class="anchor" href="#example-implementation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example implementation</h2>
+
+<p>You will need to add <code>IMAGELAZYLOAD_PROVIDERS</code> in the bootstrap of your application.</p>
+
+<p>This library utilizes <code>WebWorkers</code> (<a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API">https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API</a>) for background loading of images. </p>
+
+<p>By default, the location of the worker file is <code>assets/js/xhrWorker.js</code>. You can copy the <code>xhrWorker.js</code> file for your own use from this repo or you can create your own.</p>
+
+<p>To set a custom path to load your worker file:</p>
+
+<pre><code>WebWorker.workerUrl = 'path/to/your/custom_worker.js'
+</code></pre>
+
+<p>The example below will help illustrate this.</p>
+
+<p>Also, ensure you've loaded the angular2/http bundle as well as this library falls back to using <code>Http</code> wherever <code>Worker</code> is not supported.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">import</span> {<span class="pl-smi">Component</span>} <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>angular2/angular2<span class="pl-pds">'</span></span>;
+<span class="pl-k">import</span> {<span class="pl-smi">HTTP_PROVIDERS</span>} <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>angular2/http<span class="pl-pds">'</span></span>;
+<span class="pl-k">import</span> {
+  <span class="pl-smi">IMAGELAZYLOAD_PROVIDERS</span>, 
+  <span class="pl-smi">IMAGELAZYLOAD_DIRECTIVES</span>, 
+  <span class="pl-smi">WebWorker</span>} <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>ng2-image-lazy-load<span class="pl-pds">'</span></span>;
+
+@Component({
+    selector<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>app<span class="pl-pds">'</span></span>,
+    template<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">`</span></span>
+<span class="pl-s">      &lt;div image-lazy-load-area&gt;</span>
+<span class="pl-s">        &lt;div *ng-for="#image of images"&gt;</span>
+<span class="pl-s">          &lt;img [image-lazy-load-item]="image.url"/&gt;</span>
+<span class="pl-s">        &lt;/div&gt;</span>
+<span class="pl-s">      &lt;/div&gt;</span>
+<span class="pl-s">    <span class="pl-pds">`</span></span>,
+    directives<span class="pl-k">:</span> [<span class="pl-c1">IMAGELAZYLOAD_DIRECTIVES</span>]
+})
+<span class="pl-k">export</span> <span class="pl-k">class</span> <span class="pl-en">App</span> {
+    <span class="pl-k">public</span> images<span class="pl-k">:</span> <span class="pl-c1">Array</span><span class="pl-k">&lt;</span>any<span class="pl-k">&gt;</span> <span class="pl-k">=</span> [
+      {
+        name<span class="pl-k">:</span><span class="pl-s"><span class="pl-pds">`</span>image 1<span class="pl-pds">`</span></span>,
+        url<span class="pl-k">:</span><span class="pl-s"><span class="pl-pds">`</span>image.jpg<span class="pl-pds">`</span></span>
+      },
+      {
+        name<span class="pl-k">:</span><span class="pl-s"><span class="pl-pds">`</span>image 2<span class="pl-pds">`</span></span>,
+        url<span class="pl-k">:</span><span class="pl-s"><span class="pl-pds">`</span>image_2.jpg<span class="pl-pds">`</span></span>
+      }
+    ];
+    <span class="pl-en">constructor</span>() {
+        <span class="pl-c">// defaults to 'assets/js/xhrWorker.js'</span>
+        WebWorker.workerUrl <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>path/to/your/custom_worker.js<span class="pl-pds">'</span></span>; 
+    }
+}
+
+bootstrap(App, [
+    <span class="pl-c1">HTTP_PROVIDERS</span>,
+    <span class="pl-c1">IMAGELAZYLOAD_PROVIDERS</span>
+]);</pre></div>
+
+<h2>
+<a id="api" class="anchor" href="#api" aria-hidden="true"><span class="octicon octicon-link"></span></a>API</h2>
+
+<h3>
+<a id="imagelazyloader" class="anchor" href="#imagelazyloader" aria-hidden="true"><span class="octicon octicon-link"></span></a>ImageLazyLoader</h3>
+
+<h4>
+<a id="properties" class="anchor" href="#properties" aria-hidden="true"><span class="octicon octicon-link"></span></a>Properties:</h4>
+
+<ul>
+<li>
+<code>imageCache:any</code>: Object where the key is the url of the image the library has already loaded and doesn't need to be loaded again. i.e., {'<a href="http://domain.com/image.png':true">http://domain.com/image.png':true</a>}</li>
+</ul>
+
+<h4>
+<a id="methods" class="anchor" href="#methods" aria-hidden="true"><span class="octicon octicon-link"></span></a>Methods:</h4>
+
+<ul>
+<li>
+<code>load(url: string, headers?: any): Promise&lt;any&gt;</code>: Load url with optional custom headers</li>
+<li>
+<code>loadViaWorker(url: string, headers?: any): Promise&lt;any&gt;</code>: Use a webworker directly to load url with optional custom headers</li>
+<li>
+<code>loadViaHttp(url: string, headers?: any): Promise&lt;any&gt;</code>: Use the <code>Http</code> service directly to load url with optional custom headers</li>
+</ul>
+
+<h3>
+<a id="webworker" class="anchor" href="#webworker" aria-hidden="true"><span class="octicon octicon-link"></span></a>WebWorker</h3>
+
+<h5>
+<a id="this-is-a-helper-service-used-by-the-library-that-wraps-the-usage-of-the-browsers-worker-api-however-you-can-use-it-directly-if-youd-like-to-interact-with-it" class="anchor" href="#this-is-a-helper-service-used-by-the-library-that-wraps-the-usage-of-the-browsers-worker-api-however-you-can-use-it-directly-if-youd-like-to-interact-with-it" aria-hidden="true"><span class="octicon octicon-link"></span></a>This is a helper service used by the library that wraps the usage of the browser's <code>Worker</code> api, however you can use it directly if you'd like to interact with it.</h5>
+
+<h4>
+<a id="properties-1" class="anchor" href="#properties-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Properties:</h4>
+
+<ul>
+<li>
+<code>static supported: boolean</code>: Determine if workers are supported</li>
+<li>
+<code>static workerUrl: string</code>: Used to set the path to a worker file. Defaults to 'assets/js/xhrWorker.js'</li>
+<li>
+<code>activeWorkers: Array&lt;any&gt;</code>: At any given moment, this can be checked to see how many workers are currently activated</li>
+</ul>
+
+<h4>
+<a id="methods-1" class="anchor" href="#methods-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Methods:</h4>
+
+<ul>
+<li>
+<code>load(config: any, msgFn: any, errorFn?: any):number</code>: Load a configuration with your worker and wire it to a <code>message</code> function and/or an <code>error</code> function. Returns an <code>id</code> which can be used to terminate the worker.</li>
+<li>
+<code>terminate(id: number)</code>: Terminate the worker </li>
+</ul>
+
+<p><strong>Note:</strong> Angular 2.0 is not production ready yet! Therefore, this library isn't either.</p>
+
+<h1>
+<a id="how-to-contribute" class="anchor" href="#how-to-contribute" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to contribute</h1>
+
+<p>See <a href="https://github.com/NathanWalker/ng2-image-lazy-load/blob/master/CONTRIBUTING.md">CONTRIBUTING</a></p>
+
+<h1>
+<a id="big-thank-you" class="anchor" href="#big-thank-you" aria-hidden="true"><span class="octicon octicon-link"></span></a>Big Thank You</h1>
+
+<p>This library was made possible with help from this article by <a href="https://github.com/ocombe">Olivier Combe</a>:
+<a href="https://medium.com/@OCombe/how-to-publish-a-library-for-angular-2-on-npm-5f48cdabf435">https://medium.com/@OCombe/how-to-publish-a-library-for-angular-2-on-npm-5f48cdabf435</a></p>
+
+<p>Also, this project setup is based on the excellent <a href="https://github.com/mgechev/angular2-seed">angular2-seed</a> by <a href="https://github.com/mgechev">Minko Gechev</a>.</p>
+
+<h1>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h1>
+
+<p>MIT</p>
+      </section>
+
+      <footer>
+        <span class="ribbon-outer">
+          <span class="ribbon-inner">
+            <p>this project by <a href="https://github.com/NathanWalker">NathanWalker</a> can be found on <a href="https://github.com/NathanWalker/ng2-image-lazy-load">GitHub</a></p>
+          </span>
+          <span class="left-tail"></span>
+          <span class="right-tail"></span>
+        </span>
+        <p>Generated with <a href="https://pages.github.com">GitHub Pages</a> using Merlot</p>
+        <span class="octocat"></span>
+      </footer>
+
+    </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-70114464-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
