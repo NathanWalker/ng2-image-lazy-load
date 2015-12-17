@@ -1,55 +1,47 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=640">
-
-    <link rel="stylesheet" href="stylesheets/core.css" media="screen">
-    <link rel="stylesheet" href="stylesheets/mobile.css" media="handheld, only screen and (max-device-width:640px)">
-    <link rel="stylesheet" href="stylesheets/github-light.css">
-
-    <script type="text/javascript" src="javascripts/modernizr.js"></script>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-    <script type="text/javascript" src="javascripts/headsmart.min.js"></script>
-    <script type="text/javascript">
-      $(document).ready(function () {
-        $('#main_content').headsmart()
-      })
-    </script>
     <title>ng2-image-lazy-load by NathanWalker</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-dark.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
   </head>
-
   <body>
-    <a id="forkme_banner" href="https://github.com/NathanWalker/ng2-image-lazy-load">View on GitHub</a>
-    <div class="shell">
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/NathanWalker/ng2-image-lazy-load">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/NathanWalker/ng2-image-lazy-load/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/NathanWalker/ng2-image-lazy-load/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
 
-      <header>
-        <span class="ribbon-outer">
-          <span class="ribbon-inner">
-            <h1>ng2-image-lazy-load</h1>
-            <h2>Angular2 image lazy loader library.</h2>
-          </span>
-          <span class="left-tail"></span>
-          <span class="right-tail"></span>
-        </span>
-      </header>
+    <div class="wrapper">
 
-      <section id="downloads">
-        <span class="inner">
-          <a href="https://github.com/NathanWalker/ng2-image-lazy-load/zipball/master" class="zip"><em>download</em> .ZIP</a><a href="https://github.com/NathanWalker/ng2-image-lazy-load/tarball/master" class="tgz"><em>download</em> .TGZ</a>
-        </span>
-      </section>
+      <section>
+        <div id="title">
+          <h1>ng2-image-lazy-load</h1>
+          <p>Angular2 image lazy loader library.</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/NathanWalker">NathanWalker</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
 
+        <p>Demo: <a href="https://ng2-image-lazy-load-demo.herokuapp.com">https://ng2-image-lazy-load-demo.herokuapp.com</a></p>
 
-      <span class="banner-fix"></span>
-
-
-      <section id="main_content">
-        <h1>
-<a id="ng2-image-lazy-load" class="anchor" href="#ng2-image-lazy-load" aria-hidden="true"><span class="octicon octicon-link"></span></a>ng2-image-lazy-load</h1>
-
-<p>Demo: <a href="https://ng2-image-lazy-load-demo.herokuapp.com">https://ng2-image-lazy-load-demo.herokuapp.com</a></p>
+<h3>
+<a id="----200-beta0-ready" class="anchor" href="#----200-beta0-ready" aria-hidden="true"><span class="octicon octicon-link"></span></a>---&gt; 2.0.0-beta.0 Ready!</h3>
 
 <h2>
 <a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
@@ -58,7 +50,7 @@
 
 <p>If you use SystemJS to load your files (like the demo), you might have to update your config with this:</p>
 
-<div class="highlight highlight-source-js"><pre>System.config({
+<div class="highlight highlight-source-js"><pre><span class="pl-smi">System</span>.<span class="pl-en">config</span>({
     map<span class="pl-k">:</span> {
         <span class="pl-s"><span class="pl-pds">'</span>ng2-image-lazy-load<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>node_modules/ng2-image-lazy-load<span class="pl-pds">'</span></span>
     }
@@ -67,7 +59,8 @@
 <h2>
 <a id="example-implementation" class="anchor" href="#example-implementation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example implementation</h2>
 
-<p>You will need to add <code>IMAGELAZYLOAD_PROVIDERS</code> in the bootstrap of your application.</p>
+<p>You will need to add <code>IMAGELAZYLOAD_PROVIDERS</code> in the bootstrap of your application.
+**NOTE: Coming soon <code>angular-cli</code> may be able to help you with setup like this! <a href="https://github.com/angular/angular-cli/issues/96">Angular CLI support for 3rd party libs</a></p>
 
 <p>This library utilizes <code>WebWorkers</code> (<a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API">https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API</a>) for background loading of images. </p>
 
@@ -89,7 +82,7 @@
   <span class="pl-smi">IMAGELAZYLOAD_DIRECTIVES</span>, 
   <span class="pl-smi">WebWorker</span>} <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>ng2-image-lazy-load<span class="pl-pds">'</span></span>;
 
-@Component({
+@<span class="pl-en">Component</span>({
     selector<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>app<span class="pl-pds">'</span></span>,
     template<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">`</span></span>
 <span class="pl-s">      &lt;div image-lazy-load-area&gt;</span>
@@ -113,11 +106,11 @@
     ];
     <span class="pl-en">constructor</span>() {
         <span class="pl-c">// defaults to 'assets/js/xhrWorker.js'</span>
-        WebWorker.workerUrl <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>path/to/your/custom_worker.js<span class="pl-pds">'</span></span>; 
+        <span class="pl-smi">WebWorker</span>.<span class="pl-smi">workerUrl</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>path/to/your/custom_worker.js<span class="pl-pds">'</span></span>; 
     }
 }
 
-bootstrap(App, [
+<span class="pl-en">bootstrap</span>(App, [
     <span class="pl-c1">HTTP_PROVIDERS</span>,
     <span class="pl-c1">IMAGELAZYLOAD_PROVIDERS</span>
 ]);</pre></div>
@@ -176,8 +169,6 @@ bootstrap(App, [
 <code>terminate(id: number)</code>: Terminate the worker </li>
 </ul>
 
-<p><strong>Note:</strong> Angular 2.0 is not production ready yet! Therefore, this library isn't either.</p>
-
 <h1>
 <a id="how-to-contribute" class="anchor" href="#how-to-contribute" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to contribute</h1>
 
@@ -197,20 +188,8 @@ bootstrap(App, [
 <p>MIT</p>
       </section>
 
-      <footer>
-        <span class="ribbon-outer">
-          <span class="ribbon-inner">
-            <p>this project by <a href="https://github.com/NathanWalker">NathanWalker</a> can be found on <a href="https://github.com/NathanWalker/ng2-image-lazy-load">GitHub</a></p>
-          </span>
-          <span class="left-tail"></span>
-          <span class="right-tail"></span>
-        </span>
-        <p>Generated with <a href="https://pages.github.com">GitHub Pages</a> using Merlot</p>
-        <span class="octocat"></span>
-      </footer>
-
     </div>
-
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
               <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
