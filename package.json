@@ -1,6 +1,6 @@
 {
   "name": "ng2-image-lazy-load",
-  "version": "2.0.0",
+  "version": "2.0.6",
   "description": "Angular2 image lazy loader library",
   "repository": {
     "url": "https://github.com/NathanWalker/ng2-image-lazy-load"
@@ -87,6 +87,8 @@
     "sass-loader": "^4.0.0",
     "shelljs": "^0.7.0",
     "style-loader": "^0.13.0",
+    "systemjs": "0.19.38",
+    "systemjs-builder": "0.15.31",
     "ts-helpers": "^1.1.1",
     "tslint": "^3.4.0",
     "tslint-loader": "^2.1.0",

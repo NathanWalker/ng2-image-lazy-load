@@ -49,11 +49,16 @@ src/app.scss
 src/main.ts
 src/polyfills.ts
 src/vendor.ts
+src/*.d.ts
+src/*.js
+src/*.map
+src/style
 *.spec.*
 *.e2e.*
 CONTRIBUTING.md
 karma-shim.js
 karma.conf.js
+make.js
 protractor.conf.js
 tsconfig.json
 tslint.json

@@ -146,7 +146,6 @@ export class ImageLazyLoadAreaDirective implements OnInit {
     this.itemsToLoad = (list || this.itemsToLoad).filter((item) => !item.loaded && !item.loading);
     for (let item of this.itemsToLoad) {
       let ePos = item.getPosition();
-      console.log((ePos.bottom > 0 && (ePos.bottom >= (window.pageYOffset - this.threshold)) && (ePos.top <= ((window.pageYOffset + window.innerHeight) + this.threshold))));
       if (ePos.bottom > 0 && (ePos.bottom >= (window.pageYOffset - this.threshold)) && (ePos.top <= ((window.pageYOffset + window.innerHeight) + this.threshold))) {
         item.loadImage();
       }

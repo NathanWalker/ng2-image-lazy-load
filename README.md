@@ -30,7 +30,7 @@ Also, ensure you've loaded the angular/http bundle as well as this library falls
 import {BrowserModule} from "@angular/platform-browser";
 import {NgModule, Component} from '@angular/core';
 import {HttpModule} from '@angular/http';
-import {ImageLazyLoadModule, WebWorkerService} from 'ng2-image-lazy-load/ng2-image-lazy-load';
+import {ImageLazyLoadModule, WebWorkerService} from 'ng2-image-lazy-load';
 
 // defaults to 'assets/js/xhrWorker.js'
 WebWorkerService.workerUrl = 'path/to/your/custom_worker.js';
