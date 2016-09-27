@@ -16,9 +16,9 @@ You will need to add `IMAGELAZYLOAD_PROVIDERS` in the bootstrap of your applicat
 
 This library utilizes `WebWorkers` (https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API) for background loading of images.
 
-By default, the location of the worker file is `assets/js/xhrWorker.js`. You can copy the `xhrWorker.js` file for your own use from this repo or you can create your own.
+By default, the location of the worker file is `assets/js/xhrWorker.js`. You can copy this [xhrWorker.js](https://github.com/NathanWalker/ng2-image-lazy-load/blob/master/src/public/xhrWorker.js) file for your own use from this repo or you can create your own.
 
-To set a custom path to load your worker file:
+To set a custom path to load your worker file relative to your web server root:
 ```
 WebWorkerService.workerUrl = 'path/to/your/custom_worker.js'
 ```
@@ -33,7 +33,7 @@ import {HttpModule} from '@angular/http';
 import {ImageLazyLoadModule, WebWorkerService} from 'ng2-image-lazy-load';
 
 // defaults to 'assets/js/xhrWorker.js'
-WebWorkerService.workerUrl = 'path/to/your/custom_worker.js';
+WebWorkerService.workerUrl = 'path/to/your/xhrWorker.js';
 
 @Component({
     selector: 'app',
