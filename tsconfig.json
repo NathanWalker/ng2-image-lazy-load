@@ -8,9 +8,6 @@
     "sourceMap": true,
     "noEmitHelpers": true
   },
-  "files": [
-    "ng2-image-lazy-load.ts"
-  ],
   "compileOnSave": false,
   "buildOnSave": false,
   "awesomeTypescriptLoaderOptions": {
