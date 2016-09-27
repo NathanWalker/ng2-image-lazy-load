@@ -75,7 +75,7 @@ export class AppModule {
 
 ### Configuration
 
-You can configure custom headers as well as custom loading, loaded and error classes by using the `image` directive:
+You can configure custom headers as well as custom loading, loaded and error classes by using the `imageLazyLoadConfig` directive:
 
 ```
 // view template
