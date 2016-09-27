@@ -3,7 +3,7 @@ import {Observable} from 'rxjs/Observable';
 import {Subscription} from 'rxjs/Subscription';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/debounceTime';
-import {ImageLazyLoaderService} from '../services/image-lazy-load.service';
+import {ImageLazyLoaderService, IImageLazyLoadConfig} from '../services/image-lazy-load.service';
 
 @Directive({
   selector: '[imageLazyLoadItem]'
@@ -11,23 +11,13 @@ import {ImageLazyLoaderService} from '../services/image-lazy-load.service';
 export class ImageLazyLoadItemDirective {
   @Input('imageLazyLoadItem') imageLazyLoadItem: string;
   @Input() imageLazyLoadingContainer: string;
-  @Input() imageLazyLoadConfig: any;
   public loading: boolean = false;
   public loaded: boolean = false;
   public error: boolean = false;
   private tagName: string;
-  private loadingClass: string = 'loading';
-  private loadedClass: string = 'loaded';
-  private errorClass: string = 'error';
 
   constructor(private el: ElementRef, private renderer: Renderer, private lazyLoader: ImageLazyLoaderService) {
     this.tagName = el.nativeElement.tagName;
-
-    if (typeof(this.imageLazyLoadConfig) === 'object') {
-      this.loadingClass = this.imageLazyLoadConfig.loadingClass || this.loadingClass;
-      this.loadedClass = this.imageLazyLoadConfig.loadedClass || this.loadedClass;
-      this.errorClass = this.imageLazyLoadConfig.errorClass || this.errorClass;
-    }
   }
   /*
   * @returns return position/dimension info as an Object `{top, left, bottom}`.
@@ -92,10 +82,10 @@ export class ImageLazyLoadItemDirective {
   toggleLoaded(enable:boolean) {
     this.loaded = enable;
     if (enable) {
-      this.removeClassName(this.loadingClass);
-      this.addClassName(this.loadedClass);
+      this.removeClassName(this.lazyLoader.config.loadingClass);
+      this.addClassName(this.lazyLoader.config.loadedClass);
     } else {
-      this.removeClassName(this.loadedClass);
+      this.removeClassName(this.lazyLoader.config.loadedClass);
     }
   }
   /*
@@ -104,16 +94,16 @@ export class ImageLazyLoadItemDirective {
   loadImage() {
     if (!this.loaded && !this.loading) {
       this.loading = true;
-      this.addClassName(this.loadingClass);
+      this.addClassName(this.lazyLoader.config.loadingClass);
 
-      let customHeaders:any = this.imageLazyLoadConfig ? this.imageLazyLoadConfig.headers : null;
+      let customHeaders:any = this.lazyLoader.config.headers ? this.lazyLoader.config.headers : null;
       this.lazyLoader.load(this.imageLazyLoadItem, customHeaders).then(() => {
         this.setImage();
       }, (err) => {
         this.error = true;
         this.loading = false;
-        this.removeClassName(this.loadingClass);
-        this.addClassName(this.errorClass);
+        this.removeClassName(this.lazyLoader.config.loadingClass);
+        this.addClassName(this.lazyLoader.config.errorClass);
       });
     }
   }
@@ -138,9 +128,19 @@ export class ImageLazyLoadItemDirective {
 })
 export class ImageLazyLoadAreaDirective implements OnInit {
   @Input('imageLazyLoadArea') threshold: number;
+  /**
+   * Object that implements IImageLazyLoadConfig:
+   * headers?: any = custom headers
+   * loadingClass?: string = 'custom-loading-class'
+   * loadedClass?: string = 'custom-loaded-class'
+   * errorClass?: string = 'custom-error-class'
+   */
+  @Input() imageLazyLoadConfig: IImageLazyLoadConfig;
   @ContentChildren(ImageLazyLoadItemDirective) private items: QueryList<ImageLazyLoadItemDirective>;
   private itemsToLoad: Array<any>;
   private _sub: Subscription;
+
+  constructor(private lazyLoader: ImageLazyLoaderService) {}
 
   private loadInView(list?: Array<ImageLazyLoadItemDirective>): void {
     this.itemsToLoad = (list || this.itemsToLoad).filter((item) => !item.loaded && !item.loading);
@@ -186,7 +186,6 @@ export class ImageLazyLoadAreaDirective implements OnInit {
     // ideally this would fire on subscribe but it doesn't
     // therefore the above ensures it's handled on ngAfterContentInit
     this.items.changes.subscribe((list) => {
-      console.log('item changes...');
       this.loadInView(list.toArray());
       // since scroll subscription is unsuscribed when all items have loaded
       // ensure it is re-subscribed when changes occur
@@ -195,6 +194,10 @@ export class ImageLazyLoadAreaDirective implements OnInit {
   }
   ngOnInit() {
     this.threshold = +this.threshold || 100;
+
+    if (typeof (this.imageLazyLoadConfig) === 'object') {
+      this.lazyLoader.config = this.imageLazyLoadConfig;
+    }
   }
   ngAfterContentInit() {
     this.init();

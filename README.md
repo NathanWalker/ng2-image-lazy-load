@@ -30,8 +30,12 @@ import {NgModule, Component} from '@angular/core';
 import {HttpModule} from '@angular/http';
 import {ImageLazyLoadModule, WebWorkerService} from 'ng2-image-lazy-load';
 
-// defaults to 'assets/js/xhrWorker.js'
+// default: 'assets/js/xhrWorker.js'
 WebWorkerService.workerUrl = 'path/to/your/xhrWorker.js';
+
+// default: true
+// set to false if you want to force Http instead of WebWorker
+WebWorkerService.enabled = true;
 
 @Component({
     selector: 'app',
@@ -67,6 +71,29 @@ export class AppComponent {
 })
 export class AppModule {
 }
+```
+
+### Configuration
+
+You can configure custom headers as well as custom loading, loaded and error classes by using the `image` directive:
+
+```
+// view template
+<div imageLazyLoadArea [imageLazyLoadConfig]="lazyLoadConfig">
+  <div *ngFor="let image of images">
+    <img [imageLazyLoadItem]="image.url"/>
+  </div>
+</div>
+
+// Component
+public lazyLoadConfig: IImageLazyLoadConfig = {
+  headers: {
+    'Authorization': 'Bearer auth-token'
+  },
+  loadingClass: 'custom-loading',
+  loadedClass: 'custom-loaded',
+  errorClass: 'custom-error'
+};
 ```
 
 ## API

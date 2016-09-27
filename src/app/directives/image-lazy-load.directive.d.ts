@@ -1,21 +1,17 @@
 import { ElementRef, Renderer, OnInit } from '@angular/core';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/debounceTime';
-import { ImageLazyLoaderService } from '../services/image-lazy-load.service';
+import { ImageLazyLoaderService, IImageLazyLoadConfig } from '../services/image-lazy-load.service';
 export declare class ImageLazyLoadItemDirective {
     private el;
     private renderer;
     private lazyLoader;
     imageLazyLoadItem: string;
     imageLazyLoadingContainer: string;
-    imageLazyLoadConfig: any;
     loading: boolean;
     loaded: boolean;
     error: boolean;
     private tagName;
-    private loadingClass;
-    private loadedClass;
-    private errorClass;
     constructor(el: ElementRef, renderer: Renderer, lazyLoader: ImageLazyLoaderService);
     getPosition(): {
         top: any;
@@ -31,10 +27,20 @@ export declare class ImageLazyLoadItemDirective {
     setImage(): void;
 }
 export declare class ImageLazyLoadAreaDirective implements OnInit {
+    private lazyLoader;
     threshold: number;
+    /**
+     * Object that implements IImageLazyLoadConfig:
+     * headers?: any = custom headers
+     * loadingClass?: string = 'custom-loading-class'
+     * loadedClass?: string = 'custom-loaded-class'
+     * errorClass?: string = 'custom-error-class'
+     */
+    imageLazyLoadConfig: IImageLazyLoadConfig;
     private items;
     private itemsToLoad;
     private _sub;
+    constructor(lazyLoader: ImageLazyLoaderService);
     private loadInView(list?);
     private scrollSubscribe();
     private init();
