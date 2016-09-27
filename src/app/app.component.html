@@ -1,0 +1,30 @@
+<section class="demo" [ngClass]="{'at-top':atTop}" imageLazyLoadArea>
+  <!-- Above: You can optionally pass threshold, imageLazyLoadArea="50", the default is 100 -->
+  <h3 id="top">Angular2 Image Lazy Loader Demo</h3>
+  <ul>
+    <li><a href="#ex1">Using img tag</a></li>
+    <li><a href="#ex2">Using background-image</a></li>
+    <li><a href="#ex3">Using img tag with custom loading container</a></li>
+    <li><a href="#" (click)="addImage()">Add an image dynamically and scroll down to see it load in.</a></li>
+  </ul>
+  <h3 id="ex1">Using img tag</h3>
+  <h5>As you scroll, the img's lazily load as they scroll into view.</h5>
+  <div *ngFor="let image of images">
+    <div class="spinner"></div>
+    <img [imageLazyLoadItem]="image.url"/>
+  </div>
+  <h3 id="ex2">Using background-image</h3>
+  <h5>As you scroll, images lazily load into the background-image of the containers as they scroll into view.</h5>
+  <div *ngFor="let image of images" [imageLazyLoadItem]="image.url">
+    <div class="spinner"></div>
+  </div>
+  <h3 id="ex3">Using img tag with custom loading container</h3>
+  <h5>By default, when using img, the immediate container surrounding it will be used for the 'loading' and 'loaded' class. However you can set [imageLazyLoadingContainer] to a String which represents the selector of the parent to use for the classes. As you scroll, img's lazily load into the background-image of the containers as they scroll into view and notice that the 'loading-container' gets the classes.</h5>
+  <div *ngFor="let image of images" class="loading-container" [id]="image.id">
+    <div class="spinner"></div>
+    <div>
+      <img [imageLazyLoadItem]="image.url" [imageLazyLoadingContainer]="'.loading-container'"/>
+    </div>
+  </div>
+  <a class="top" href="#top">Top</a>
+</section>
