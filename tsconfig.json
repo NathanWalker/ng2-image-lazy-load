@@ -5,8 +5,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "declaration": true,
-    "sourceMap": true,
-    "noEmitHelpers": true
+    "sourceMap": true
   },
   "compileOnSave": false,
   "buildOnSave": false,
