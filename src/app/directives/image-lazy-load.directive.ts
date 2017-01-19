@@ -1,4 +1,6 @@
-import {Directive, ContentChildren, QueryList, Input, ElementRef, Renderer, OnInit} from '@angular/core';
+import {
+    Directive, ContentChildren, QueryList, Input, ElementRef, Renderer, OnInit, AfterContentInit
+} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {Subscription} from 'rxjs/Subscription';
 import 'rxjs/add/observable/fromEvent';
@@ -37,15 +39,17 @@ export class ImageLazyLoadItemDirective {
   getLoadingContainer() {
     if (this.imageLazyLoadingContainer) {
       // find parent node with specified selector
-      let collectionHas = (a:any, b:any) => {
-        for(let i in a) {
-          if(a[i] === b) return true;
+      let collectionHas = (a: any, b: any) => {
+        for (let i in a) {
+          if (a[i] === b) {
+              return true;
+          }
         }
         return false;
       };
       let all = document.querySelectorAll(this.imageLazyLoadingContainer);
       let cur = this.el.nativeElement.parentNode;
-      while(cur && !collectionHas(all, cur)) {
+      while (cur && !collectionHas(all, cur)) {
         cur = cur.parentNode;
       }
       if (cur) {
@@ -79,7 +83,7 @@ export class ImageLazyLoadItemDirective {
       container.className = c.replace(new RegExp('(?:^|\\s+)' + name + '(?:\\s+|$)', 'g'), '');
     }
   }
-  toggleLoaded(enable:boolean) {
+  toggleLoaded(enable: boolean) {
     this.loaded = enable;
     if (enable) {
       this.removeClassName(this.lazyLoader.config.loadingClass);
@@ -96,7 +100,7 @@ export class ImageLazyLoadItemDirective {
       this.loading = true;
       this.addClassName(this.lazyLoader.config.loadingClass);
 
-      let customHeaders:any = this.lazyLoader.config.headers ? this.lazyLoader.config.headers : null;
+      let customHeaders: any = this.lazyLoader.config.headers ? this.lazyLoader.config.headers : null;
       this.lazyLoader.load(this.imageLazyLoadItem, customHeaders).then(() => {
         this.setImage();
       }, (err) => {
@@ -126,7 +130,7 @@ export class ImageLazyLoadItemDirective {
 @Directive({
   selector: '[imageLazyLoadArea]'
 })
-export class ImageLazyLoadAreaDirective implements OnInit {
+export class ImageLazyLoadAreaDirective implements OnInit, AfterContentInit {
   @Input('imageLazyLoadArea') threshold: number;
   /**
    * Object that implements IImageLazyLoadConfig:
@@ -146,7 +150,8 @@ export class ImageLazyLoadAreaDirective implements OnInit {
     this.itemsToLoad = (list || this.itemsToLoad).filter((item) => !item.loaded && !item.loading);
     for (let item of this.itemsToLoad) {
       let ePos = item.getPosition();
-      if (ePos.bottom > 0 && (ePos.bottom >= (window.pageYOffset - this.threshold)) && (ePos.top <= ((window.pageYOffset + window.innerHeight) + this.threshold))) {
+      if (ePos.bottom > 0 && (ePos.bottom >= (window.pageYOffset - this.threshold))
+          && (ePos.top <= ((window.pageYOffset + window.innerHeight) + this.threshold))) {
         item.loadImage();
       }
     }
