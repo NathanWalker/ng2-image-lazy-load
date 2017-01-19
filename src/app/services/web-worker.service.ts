@@ -7,13 +7,13 @@ export class WebWorkerService {
   static workerUrl: string = 'assets/js/xhrWorker.js';
   public activeWorkers: Array<any> = [];
 
-  load(config: any, msgFn: any, errorFn?: any):number {
+  load(config: any, msgFn: any, errorFn?: any): number {
     if (typeof(config) !== 'object') {
       throw(`config must be an Object with method and url defined.`);
     } else if (!config.url) {
       throw(`config.url must be defined.`);
     }
-    let id:number = Math.floor(Math.random()*1000000000000);
+    let id: number = Math.floor(Math.random() * 1000000000000);
     let w = new Worker(WebWorkerService.workerUrl);
     if (msgFn) {
       w.addEventListener('message', msgFn, false);
@@ -31,7 +31,7 @@ export class WebWorkerService {
     w.postMessage(config);
     return id;
   }
-  terminate(id: number):void {
+  terminate(id: number): void {
     let index = this.activeWorkers.findIndex(item => item.id === id);
     if (index > -1) {
       let activeWorker = this.activeWorkers[index];

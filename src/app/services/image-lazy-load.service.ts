@@ -46,7 +46,7 @@ export class ImageLazyLoaderService {
     return new Promise((resolve, reject) => {
       let id: any, completeHandler: any, msgFn: any, errorFn: any;
 
-      completeHandler = (success:boolean, err?:any) => {
+      completeHandler = (success: boolean, err?: any) => {
         this.worker.terminate(id);
 
         if (success) {
@@ -69,7 +69,7 @@ export class ImageLazyLoaderService {
         completeHandler(false, e);
       };
 
-      let config:any = {
+      let config: any = {
         method: 'GET',
         url: url
       };
@@ -108,10 +108,18 @@ export class ImageLazyLoaderService {
    **/
   public set config(value: IImageLazyLoadConfig) {
     if (value) {
-      if (value.headers) this._config.headers = value.headers;
-      if (value.loadingClass) this._config.loadingClass = value.loadingClass;
-      if (value.loadedClass) this._config.loadedClass = value.loadedClass;
-      if (value.errorClass) this._config.errorClass = value.errorClass;
+      if (value.headers) {
+          this._config.headers = value.headers;
+      }
+      if (value.loadingClass) {
+          this._config.loadingClass = value.loadingClass;
+      }
+      if (value.loadedClass) {
+          this._config.loadedClass = value.loadedClass;
+      }
+      if (value.errorClass) {
+          this._config.errorClass = value.errorClass;
+      }
     }
   }
 
