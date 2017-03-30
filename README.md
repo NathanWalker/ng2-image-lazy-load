@@ -1,6 +1,11 @@
 [![Dependency Status](https://david-dm.org/NathanWalker/ng2-image-lazy-load.svg)](https://david-dm.org/NathanWalker/ng2-image-lazy-load)
 [![devDependency Status](https://david-dm.org/NathanWalker/ng2-image-lazy-load/dev-status.svg)](https://david-dm.org/NathanWalker/ng2-image-lazy-load#info=devDependencies)
 
+# Not currently maintained
+
+You might try using [this great lazy load lib for now](https://github.com/tjoskar/ng-lazyload-image).
+The only thing the above lib doesn't have is the Web Worker support - I hope to circle back and update this lib at some point in future or contribute worker support to tjoskar's lib.
+
 # ng2-image-lazy-load
 
 Demo: https://ng2-image-lazy-load-demo.herokuapp.com
